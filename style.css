@@ -28,3 +28,13 @@ body {
 #blocs td {
     text-align : center;
 }
+
+#svgContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.play-button {
+    cursor: pointer;
+}

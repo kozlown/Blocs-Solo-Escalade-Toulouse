@@ -32,7 +32,7 @@
     </body>
 
     <script !src="">
-        // inclusion svg
+        // inclusion svg map
         {
             xhr = new XMLHttpRequest();
             xhr.open("GET", "./dist/salle.svg", false);
@@ -43,16 +43,48 @@
             document.getElementById("svgContainer")
                     .appendChild(xhr.responseXML.documentElement);
         }
-
+        // récupération svg localisation
+        let localisationSVG = "";
+        {
+            xhr = new XMLHttpRequest();
+            xhr.open("GET", "./dist/images/localisation.svg", false);
+            // Following line is just to be on the safe side;
+            // not needed if your server delivers SVG with correct MIME type
+            xhr.overrideMimeType("image/svg+xml");
+            xhr.send("");
+            localisationSVG = xhr.responseXML.documentElement;
+        }
+        // json des secteurs
         let secteurs = {
             1: {
                 nom: "La rame",
                 blocs: [
                     {
                         color: "red",
-                        description: "",
+                        description: "Talon et contrepointe au départ",
                         start: "left",
                         end: "middle",
+                        video: "https://www.youtube.com/embed/YrK_DglrSG0"
+                    },
+                    {
+                        color: "blue",
+                        description: "Départ tête en bas",
+                        start: "right",
+                        end: "left",
+                        video: "https://www.youtube.com/embed/YrK_DglrSG0"
+                    },
+                    {
+                        color: "blue",
+                        description: "Départ tête en bas",
+                        start: "right",
+                        end: "left",
+                        video: "https://www.youtube.com/embed/YrK_DglrSG0"
+                    },
+                    {
+                        color: "blue",
+                        description: "Départ tête en bas",
+                        start: "right",
+                        end: "left",
                         video: "https://www.youtube.com/embed/YrK_DglrSG0"
                     },
                     {
@@ -75,13 +107,40 @@
                         video: "https://www.youtube.com/embed/YrK_DglrSG0"
                     }
                 ]
+            },
+            3 : {
+                nom: "",
+                blocs: [
+                    {
+                        color: "black",
+                        description: "",
+                        start: "left",
+                        end: "middle",
+                        video: "https://www.youtube.com/embed/YrK_DglrSG0"
+                    }
+                ]
+            },
+            4 : {
+                nom: "",
+                blocs: [
+                    {
+                        color: "black",
+                        description: "",
+                        start: "left",
+                        end: "middle",
+                        video: "https://www.youtube.com/embed/YrK_DglrSG0"
+                    }
+                ]
             }
         };
-        let nbSecteurs = 4;
+
+        let nbSecteurs = Object.keys(secteurs).length;
         for(let n = 1;n<=nbSecteurs; n++){
             document.getElementById(`detectorSecteur${n}`).style.cursor = "pointer";
             document.getElementById(`secteur${n}`).style.opacity = "0";
             document.getElementById(`legendSecteur${n}`).style.opacity = "0";
+
+            // gestion des évênements
             document.getElementById(`detectorSecteur${n}`).addEventListener("mouseover",function(event){
                 $(`#secteur${n}`).fadeTo("fast", 1);
                 $(`#legendSecteur${n}`).fadeTo("fast", 1);
@@ -92,15 +151,43 @@
             });
             document.getElementById(`detectorSecteur${n}`).addEventListener("click",function(){
                 let html = "";
+                let localLocalisationSVG = localisationSVG;
                 for(let i = 0; i<secteurs[n].blocs.length; i++){
+                    localLocalisationSVG.setAttribute("id",`localisation${i}`);
                     html += `<tr>`;
                     html += `<td><img src="./dist/images/cercles/cercle${secteurs[n].blocs[i].color}.svg" alt=""></td>`;
-                    html += `<td>${secteurs[n].blocs[i].start+secteurs[n].blocs[i].end}</td>`;
+                    html += `<td>${localLocalisationSVG.outerHTML}</td>`;
                     html += `<td>${secteurs[n].blocs[i].description}</td>`;
-                    html += `<td><iframe width="560" height="315" src="${secteurs[n].blocs[i].video}" frameborder="0" allowfullscreen></iframe></td>`;
+                    html += `<td><img class="play-button" height="100px" src="./dist/images/video-play-button.png" alt="play-button"></td>`;
                     html += `</tr>`;
                 }
                 $(`#blocs tbody`).html(html);
+                // <iframe width="178" height="100" src="${secteurs[n].blocs[i].video}" frameborder="0" allowfullscreen></iframe>
+                // Set localisation
+                for(let i = 0; i<secteurs[n].blocs.length; i++){
+                    switch (secteurs[n].blocs[i].start){
+                        case "left":
+                            $(`#localisation${i} #startLeft`).css("display", "block");
+                            break;
+                        case "middle":
+                            $(`#localisation${i} #startMiddle`).css("display", "block");
+                            break;
+                        case "right":
+                            $(`#localisation${i} #startRight`).css("display", "block");
+                            break;
+                    }
+                    switch (secteurs[n].blocs[i].end){
+                        case "left":
+                            $(`#localisation${i} #endLeft`).css("display", "block");
+                            break;
+                        case "middle":
+                            $(`#localisation${i} #endMiddle`).css("display", "block");
+                            break;
+                        case "right":
+                            $(`#localisation${i} #endRight`).css("display", "block");
+                            break;
+                    }
+                }
             })
         }
     </script>
