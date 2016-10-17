@@ -25,7 +25,7 @@ body {
     position: absolute;
 }
 
-#blocs td {
+#blocs td, #blocs th {
     text-align : center;
 }
 

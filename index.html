@@ -9,7 +9,17 @@
         <script src="//cdn.jsdelivr.net/sweep/latest/mainfile"></script>
         <link rel="stylesheet" href="./style.css">
         <link rel="stylesheet" href="./dist/wysiwyg.css-master/wysiwyg.css">
-        <title>Document</title>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+              integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="./dist/Bootstrap-Youtube-Popup-Player-Plugin/bootstrap.youtubepopup.min.js"></script>
+        <title>Blocs Solo Escalade Toulouse</title>
     </head>
 
     <body>
@@ -67,31 +77,38 @@
                         video: "https://www.youtube.com/embed/YrK_DglrSG0"
                     },
                     {
-                        color: "blue",
-                        description: "Départ tête en bas",
+                        color: "purple",
+                        description: "",
                         start: "right",
+                        end: "left",
+                        video: "https://www.youtube.com/embed/YrK_DglrSG0"
+                    },
+                    {
+                        color: "green",
+                        description: "",
+                        start: "middle",
                         end: "left",
                         video: "https://www.youtube.com/embed/YrK_DglrSG0"
                     },
                     {
                         color: "blue",
                         description: "Départ tête en bas",
+                        start: "left",
+                        end: "right",
+                        video: "https://www.youtube.com/embed/YrK_DglrSG0"
+                    },
+                    {
+                        color: "orange",
+                        description: "",
                         start: "right",
-                        end: "left",
+                        end: "middle",
                         video: "https://www.youtube.com/embed/YrK_DglrSG0"
                     },
                     {
                         color: "blue",
-                        description: "Départ tête en bas",
-                        start: "right",
-                        end: "left",
-                        video: "https://www.youtube.com/embed/YrK_DglrSG0"
-                    },
-                    {
-                        color: "blue",
-                        description: "Départ tête en bas",
-                        start: "right",
-                        end: "left",
+                        description: "",
+                        start: "middle",
+                        end: "middle",
                         video: "https://www.youtube.com/embed/YrK_DglrSG0"
                     }
                 ]
@@ -135,37 +152,40 @@
         };
 
         let nbSecteurs = Object.keys(secteurs).length;
-        for(let n = 1;n<=nbSecteurs; n++){
+        for(let n = 1;n<=nbSecteurs; n++) {
             document.getElementById(`detectorSecteur${n}`).style.cursor = "pointer";
             document.getElementById(`secteur${n}`).style.opacity = "0";
             document.getElementById(`legendSecteur${n}`).style.opacity = "0";
 
             // gestion des évênements
-            document.getElementById(`detectorSecteur${n}`).addEventListener("mouseover",function(event){
+            document.getElementById(`detectorSecteur${n}`).addEventListener("mouseover", function (event) {
                 $(`#secteur${n}`).fadeTo("fast", 1);
                 $(`#legendSecteur${n}`).fadeTo("fast", 1);
             });
-            document.getElementById(`detectorSecteur${n}`).addEventListener("mouseout",function(event){
+            document.getElementById(`detectorSecteur${n}`).addEventListener("mouseout", function (event) {
                 $(`#legendSecteur${n}`).fadeTo("fast", 0);
                 $(`#secteur${n}`).fadeTo("fast", 0);
             });
-            document.getElementById(`detectorSecteur${n}`).addEventListener("click",function(){
+            document.getElementById(`detectorSecteur${n}`).addEventListener("click", function () {
                 let html = "";
                 let localLocalisationSVG = localisationSVG;
-                for(let i = 0; i<secteurs[n].blocs.length; i++){
-                    localLocalisationSVG.setAttribute("id",`localisation${i}`);
+                for (let i = 0; i < secteurs[n].blocs.length; i++) {
+                    localLocalisationSVG.setAttribute("id", `localisation${i}`);
                     html += `<tr>`;
                     html += `<td><img src="./dist/images/cercles/cercle${secteurs[n].blocs[i].color}.svg" alt=""></td>`;
                     html += `<td>${localLocalisationSVG.outerHTML}</td>`;
                     html += `<td>${secteurs[n].blocs[i].description}</td>`;
-                    html += `<td><img class="play-button" height="100px" src="./dist/images/video-play-button.png" alt="play-button"></td>`;
+                    html += `<td><a class="youtube" href="${secteurs[n].blocs[i].video}"><img class="play-button" height="100px" src="./dist/images/video-play-button.png" alt="play-button"></a></td>`;
                     html += `</tr>`;
                 }
                 $(`#blocs tbody`).html(html);
-                // <iframe width="178" height="100" src="${secteurs[n].blocs[i].video}" frameborder="0" allowfullscreen></iframe>
+                $(function () {
+                    $(".youtube").YouTubeModal({autoplay:0, width:640, height:480});
+                });
+
                 // Set localisation
-                for(let i = 0; i<secteurs[n].blocs.length; i++){
-                    switch (secteurs[n].blocs[i].start){
+                for (let i = 0; i < secteurs[n].blocs.length; i++) {
+                    switch (secteurs[n].blocs[i].start) {
                         case "left":
                             $(`#localisation${i} #startLeft`).css("display", "block");
                             break;
@@ -176,7 +196,7 @@
                             $(`#localisation${i} #startRight`).css("display", "block");
                             break;
                     }
-                    switch (secteurs[n].blocs[i].end){
+                    switch (secteurs[n].blocs[i].end) {
                         case "left":
                             $(`#localisation${i} #endLeft`).css("display", "block");
                             break;
