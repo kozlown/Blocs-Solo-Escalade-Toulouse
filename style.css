@@ -28,7 +28,15 @@ body {
 #blocs td, #blocs th {
     text-align : center;
 }
-
+#localisation {
+    width: 200px;
+}
+#video {
+    width: 180px;
+}
+#color {
+    width: 100px;
+}
 #svgContainer {
     position: fixed;
     top: 0;
