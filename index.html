@@ -43,27 +43,20 @@
 
     <script !src="">
         // inclusion svg map
-        {
-            xhr = new XMLHttpRequest();
-            xhr.open("GET", "./dist/salle.svg", false);
-            // Following line is just to be on the safe side;
-            // not needed if your server delivers SVG with correct MIME type
-            xhr.overrideMimeType("image/svg+xml");
-            xhr.send("");
-            document.getElementById("svgContainer")
-                    .appendChild(xhr.responseXML.documentElement);
-        }
+        $.get({
+            url:"./dist/salle.svg",
+            async: false
+        },(data)=>{
+            document.getElementById("svgContainer").appendChild(data.documentElement);
+        })
         // récupération svg localisation
         let localisationSVG = "";
-        {
-            xhr = new XMLHttpRequest();
-            xhr.open("GET", "./dist/images/localisation.svg", false);
-            // Following line is just to be on the safe side;
-            // not needed if your server delivers SVG with correct MIME type
-            xhr.overrideMimeType("image/svg+xml");
-            xhr.send("");
-            localisationSVG = xhr.responseXML.documentElement;
-        }
+        $.get({
+            url: "./dist/images/localisation.svg",
+            async: false
+        },(data)=>{
+            localisationSVG = data.documentElement
+        })
         // json des secteurs
         let secteurs = {
             1: {
@@ -153,20 +146,27 @@
 
         let nbSecteurs = Object.keys(secteurs).length;
         for(let n = 1;n<=nbSecteurs; n++) {
-            document.getElementById(`detectorSecteur${n}`).style.cursor = "pointer";
-            document.getElementById(`secteur${n}`).style.opacity = "0";
-            document.getElementById(`legendSecteur${n}`).style.opacity = "0";
+            $(`#detectorSecteur${n}`).addClass("detector");
+            $(`#detectorSecteur${n}`).css("cursor","pointer");
+            $(`#secteur${n}`).css("opacity","0");
+            $(`#legendSecteur${n}`).css("opacity","0");
 
             // gestion des évênements
-            document.getElementById(`detectorSecteur${n}`).addEventListener("mouseover", function (event) {
+            $(`#detectorSecteur${n}`).on("mouseover", function (event) {
                 $(`#secteur${n}`).fadeTo("fast", 1);
                 $(`#legendSecteur${n}`).fadeTo("fast", 1);
-            });
-            document.getElementById(`detectorSecteur${n}`).addEventListener("mouseout", function (event) {
-                $(`#legendSecteur${n}`).fadeTo("fast", 0);
-                $(`#secteur${n}`).fadeTo("fast", 0);
-            });
-            document.getElementById(`detectorSecteur${n}`).addEventListener("click", function () {
+            })
+            $(`#detectorSecteur${n}`).on("mouseout", function (event) {
+                if (!$(this).hasClass("selected")) {
+                    $(`#legendSecteur${n}`).fadeTo("fast", 0);
+                    $(`#secteur${n}`).fadeTo("fast", 0);
+                }
+            })
+            $(`#detectorSecteur${n}`).on("click", function () {
+                $(".selected").removeClass("selected");
+                $(".detector").trigger("mouseout");
+                $(this).addClass("selected");
+                $(this).trigger("mouseover");
                 let html = "";
                 let localLocalisationSVG = localisationSVG;
                 for (let i = 0; i < secteurs[n].blocs.length; i++) {
@@ -180,7 +180,7 @@
                 }
                 $(`#blocs tbody`).html(html);
                 $(function () {
-                    $(".youtube").YouTubeModal({autoplay:0, width:640, height:480});
+                    $(".youtube").YouTubeModal({autoplay: 0, width: 640, height: 480});
                 });
 
                 // Set localisation
@@ -210,5 +210,6 @@
                 }
             })
         }
+        $(`#detectorSecteur1`).click()
     </script>
 </html>
