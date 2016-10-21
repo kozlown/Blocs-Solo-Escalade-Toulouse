@@ -18,13 +18,6 @@ body {
     background-size: cover;
 }
 
-#blocs {
-    width: calc(100% - 750px);
-    top: 0;
-    left: 750px;
-    position: absolute;
-}
-
 #blocs td, #blocs th {
     text-align : center;
 }
@@ -37,10 +30,40 @@ body {
 #color {
     width: 100px;
 }
-#svgContainer {
-    position: fixed;
-    top: 0;
-    left: 0;
+@media screen and (min-width: 744px) {
+    #svgContainer {
+        width: 744px;
+        height: 1052px;
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
+    #blocs {
+        width: calc(100% - 750px);
+        top: 0;
+        left: 750px;
+        position: absolute;
+    }
+}
+@media screen and (max-width: 744px) {
+    #svgContainer {
+        width: 100%;
+        height: auto;
+        position: relative;
+        top: 0;
+        left: 0;
+    }
+    #svgContainer svg{
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    #blocs {
+        width: 100%;
+        left: 0px;
+        position: relative;
+        display: block;
+    }
 }
 
 .play-button {

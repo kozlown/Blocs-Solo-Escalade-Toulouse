@@ -24,7 +24,7 @@
 
     <body>
         <div class="wysiwyg">
-            <div width="744" height="1052" id="svgContainer">
+            <div id="svgContainer">
             </div>
 
             <table id="blocs">
@@ -67,42 +67,42 @@
                         description: "Talon et contrepointe au départ",
                         start: "left",
                         end: "middle",
-                        video: "https://www.youtube.com/embed/YrK_DglrSG0"
+                        video: "https://www.youtube.com/watch?v=lIXK_753icg"
                     },
                     {
                         color: "purple",
                         description: "",
                         start: "right",
                         end: "left",
-                        video: "https://www.youtube.com/embed/YrK_DglrSG0"
+                        video: "https://www.youtube.com/watch?v=lIXK_753icg"
                     },
                     {
                         color: "green",
                         description: "",
                         start: "middle",
                         end: "left",
-                        video: "https://www.youtube.com/embed/YrK_DglrSG0"
+                        video: "https://www.youtube.com/watch?v=lIXK_753icg"
                     },
                     {
                         color: "blue",
                         description: "Départ tête en bas",
                         start: "left",
                         end: "right",
-                        video: "https://www.youtube.com/embed/YrK_DglrSG0"
+                        video: "https://www.youtube.com/watch?v=lIXK_753icg"
                     },
                     {
                         color: "orange",
                         description: "",
                         start: "right",
                         end: "middle",
-                        video: "https://www.youtube.com/embed/YrK_DglrSG0"
+                        video: "https://www.youtube.com/watch?v=lIXK_753icg"
                     },
                     {
                         color: "blue",
                         description: "",
                         start: "middle",
                         end: "middle",
-                        video: "https://www.youtube.com/embed/YrK_DglrSG0"
+                        video: "https://www.youtube.com/watch?v=lIXK_753icg"
                     }
                 ]
             },
@@ -114,7 +114,7 @@
                         description: "",
                         start: "left",
                         end: "middle",
-                        video: "https://www.youtube.com/embed/YrK_DglrSG0"
+                        video: "https://www.youtube.com/watch?v=lIXK_753icg"
                     }
                 ]
             },
@@ -126,7 +126,7 @@
                         description: "",
                         start: "left",
                         end: "middle",
-                        video: "https://www.youtube.com/embed/YrK_DglrSG0"
+                        video: "https://www.youtube.com/watch?v=lIXK_753icg"
                     }
                 ]
             },
@@ -138,7 +138,7 @@
                         description: "",
                         start: "left",
                         end: "middle",
-                        video: "https://www.youtube.com/embed/YrK_DglrSG0"
+                        video: "https://www.youtube.com/watch?v=lIXK_753icg"
                     }
                 ]
             }
@@ -163,10 +163,10 @@
                 }
             })
             $(`#detectorSecteur${n}`).on("click", function () {
-                $(".selected").removeClass("selected");
-                $(".detector").trigger("mouseout");
-                $(this).addClass("selected");
-                $(this).trigger("mouseover");
+                $(".selected").removeClass("selected"); // L'ancien selectionné n'a plus la classe "selected"
+                $(this).addClass("selected"); // Le nouveau selectionné a la classe "selected"
+                $(".detector").trigger("mouseout"); // Tout les secteurs deviennent invisibles sauf celui qui est selectionné
+                $(this).trigger("mouseover"); // Le secteur sélectionné devient visible
                 let html = "";
                 let localLocalisationSVG = localisationSVG;
                 for (let i = 0; i < secteurs[n].blocs.length; i++) {
@@ -180,7 +180,7 @@
                 }
                 $(`#blocs tbody`).html(html);
                 $(function () {
-                    $(".youtube").YouTubeModal({autoplay: 0, width: 640, height: 480});
+                    $(".youtube").YouTubeModal({autoplay: 1, width: 640, height: 480});
                 });
 
                 // Set localisation
