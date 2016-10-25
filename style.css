@@ -40,7 +40,7 @@ body {
     }
     #svgContainer svg{
         width: 100%;
-        height: auto;
+        height: 100%;
         position: relative;
     }
     #blocs {
@@ -60,7 +60,7 @@ body {
     }
     #svgContainer svg{
         width: 100%;
-        height: auto;
+        height: 100%;
         position: relative;
     }
     #blocs {
