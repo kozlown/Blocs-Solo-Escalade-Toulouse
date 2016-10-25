@@ -231,5 +231,5 @@ $(document).ready(function(){
             })
         })(x);
     }
-    //$(`#detectorSecteur1`).click();
+    $(`#detectorSecteur1`).click();
 })
