@@ -30,11 +30,11 @@ body {
 #color {
     width: 100px;
 }
-@media screen and (min-width: 744px) {
+@media screen and (min-width: 565px) {
     #svgContainer {
-        width: 744px;
-        height: 1052px;
-        position: fixed;
+        width: 565px;
+        height: 800px;
+        position: relative;
         top: 0;
         left: 0;
     }
@@ -44,13 +44,13 @@ body {
         position: relative;
     }
     #blocs {
-        width: calc(100% - 750px);
+        width: calc(100% - 565px);
         top: 0;
-        left: 750px;
+        left: 565px;
         position: absolute;
     }
 }
-@media screen and (max-width: 744px) {
+@media screen and (max-width: 565px) {
     #svgContainer {
         width: 100%;
         height: auto;
