@@ -2,7 +2,6 @@ var secteurs;
 var localisationSVG = "";
 var nbSecteurs;
 $(document).ready(function(){
-    document.body.style.backgroundColor = "red";
     // inclusion svg map
     $.get({
         url:"./dist/salle.svg",
